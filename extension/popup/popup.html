@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetRevise</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <span class="logo">LeetRevise</span>
+      <a id="open-dashboard" href="#" style="display:block;text-align:center;font-size:11px;color:#f97316;padding:6px 0 2px;text-decoration:none;">Open Dashboard →</a>
+      <div class="tabs">
+        <button class="tab active" data-tab="pending">Pending</button>
+        <button class="tab" data-tab="stats">Stats</button>
+        <button class="tab" data-tab="settings">Settings</button>
+      </div>
+    </header>
+
+    <div class="tab-content" id="tab-pending">
+      <div id="pending-loading" class="skeleton-list">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+      <div id="pending-empty" class="empty-state" style="display:none;">
+        <p class="empty-title">No pending revisions.</p>
+        <p class="empty-sub">Go fail some problems!</p>
+      </div>
+      <ul id="pending-list" style="display:none;"></ul>
+    </div>
+
+    <div class="tab-content" id="tab-stats" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Scheduled</span>
+          <span class="stat-value" id="stat-total">-</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Solved</span>
+          <span class="stat-value" id="stat-solved">-</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Pending</span>
+          <span class="stat-value" id="stat-pending">-</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Streak</span>
+          <span class="stat-value" id="stat-streak">-</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="diff-chart" height="160"></canvas>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-settings" style="display:none;">
+      <div id="settings-logged-out" style="display:none;">
+        <p class="settings-info">Connect your account to sync problems and receive reminders.</p>
+        <button class="btn-primary" id="connect-btn">Connect Account</button>
+      </div>
+      <div id="settings-logged-in" style="display:none;">
+        <p class="settings-email" id="settings-email-text"></p>
+        <div class="toggle-row">
+          <span class="toggle-label">Show button on LeetCode</span>
+          <label class="toggle">
+            <input type="checkbox" id="show-btn-toggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <button class="btn-danger" id="disconnect-btn">Disconnect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts at bottom of body, in dependency order -->
+  <script src="../vendor/chart.umd.min.js"></script>
+  <script src="../utils/storage.js"></script>
+  <script src="../utils/api.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

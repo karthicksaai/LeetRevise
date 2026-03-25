@@ -1,0 +1,7 @@
+#leetrevise-schedule-btn:hover {
+  border-color: #fb923c;
+}
+
+#leetrevise-toast {
+  pointer-events: none;
+}

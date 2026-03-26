@@ -164,15 +164,15 @@ async function injectButton() {
   btn.addEventListener('mouseleave', () => { btn.style.transform = 'scale(1)'; });
 
   btn.addEventListener('click', async () => {
-    const authenticated = await isAuthenticated();
-    if (!authenticated) {
-      showToast('Please connect your account in the extension popup', 'warning');
-      return;
-    }
-
-    setButtonState(btn, 'loading');
-
     try {
+      const authenticated = await isAuthenticated();
+      if (!authenticated) {
+        showToast('Please connect your account in the extension popup', 'warning');
+        return;
+      }
+
+      setButtonState(btn, 'loading');
+
       await scheduleRevision({
         problem_title: problemTitle,
         problem_url: window.location.href,
@@ -184,7 +184,11 @@ async function injectButton() {
       showToast('Revision scheduled for Day 3, 7, 15 and 30!', 'success');
     } catch (err) {
       setButtonState(btn, 'default');
-      showToast(err.message || 'Failed to schedule revision', 'error');
+      if (err?.message?.includes('Extension context invalidated')) {
+        showToast('Please refresh the page and try again', 'warning');
+        return;
+      }
+      showToast(err.message || 'Something went wrong', 'error');
     }
   });
 

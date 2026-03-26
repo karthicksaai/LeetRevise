@@ -7,8 +7,21 @@ const STORAGE_KEYS = {
   SCHEDULED_URLS: 'scheduled_urls',
 };
 
+function isChromeExtensionContextValid() {
+  try {
+    return !!(chrome && chrome.runtime && chrome.runtime.id);
+  } catch {
+    return false;
+  }
+}
+
 async function getAuthData() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    if (!isChromeExtensionContextValid()) {
+      reject(new Error('Extension context invalidated. Please refresh the page.'));
+      return;
+    }
+
     chrome.storage.local.get(
       [STORAGE_KEYS.ACCESS_TOKEN, STORAGE_KEYS.REFRESH_TOKEN, STORAGE_KEYS.EXPIRES_AT, STORAGE_KEYS.USER_EMAIL],
       (result) => resolve(result)

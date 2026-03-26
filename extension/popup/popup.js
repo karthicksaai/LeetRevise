@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadSettings();
 
   document.getElementById('connect-btn').addEventListener('click', () => {
-    const appUrl = 'https://leet-revise-8z4ft7iad-karthicks-projects-939838e3.vercel.app';
+    const appUrl = 'https://leet-revise.vercel.app';
     chrome.tabs.create({ url: `${appUrl}/auth/extension-login` });
   });
 
@@ -203,6 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('open-dashboard').addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.tabs.create({ url: 'https://leet-revise-8z4ft7iad-karthicks-projects-939838e3.vercel.app/dashboard' });
+    chrome.tabs.create({ url: 'https://leet-revise.vercel.app/dashboard' });
   });
 });

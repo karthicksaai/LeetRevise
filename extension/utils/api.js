@@ -1,4 +1,4 @@
-const APP_URL = 'https://leet-revise-8z4ft7iad-karthicks-projects-939838e3.vercel.app';
+const APP_URL = 'https://leet-revise.vercel.app';
 
 async function getValidAccessToken() {
   const data = await getAuthData();

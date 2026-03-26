@@ -37,22 +37,23 @@ async function getValidAccessToken() {
   return accessToken;
 }
 
-async function scheduleRevision(problemData) {
-  const token = await getValidAccessToken();
-  if (!token) throw new Error('Not authenticated');
+async function scheduleRevision(data) {
+  const { access_token } = await getAuthData();
+  
+  if (!access_token) throw new Error('Not authenticated');
 
   const response = await fetch(`${APP_URL}/api/schedule`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      'Authorization': `Bearer ${access_token}`,
     },
-    body: JSON.stringify(problemData),
+    body: JSON.stringify(data),
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Failed to schedule revision');
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to schedule');
   }
 
   return response.json();

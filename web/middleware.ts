@@ -12,13 +12,13 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         get(name: string) {
           return request.cookies.get(name)?.value;
         },
-        set(name: string, value: string, options: Record<string, unknown>) {
-          request.cookies.set({ name, value, ...options } as Parameters<typeof request.cookies.set>[0]);
-          response.cookies.set({ name, value, ...options } as Parameters<typeof response.cookies.set>[0]);
+        set(name: string, value: string, options: Record<string, any>) {
+          // ✅ FIXED
+          response.cookies.set(name, value, options);
         },
-        remove(name: string, options: Record<string, unknown>) {
-          request.cookies.set({ name, value: '', ...options } as Parameters<typeof request.cookies.set>[0]);
-          response.cookies.set({ name, value: '', ...options } as Parameters<typeof response.cookies.set>[0]);
+        remove(name: string, options: Record<string, any>) {
+          // ✅ FIXED
+          response.cookies.delete(name);
         },
       },
     }

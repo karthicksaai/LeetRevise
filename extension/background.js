@@ -1,4 +1,4 @@
-const APP_URL = 'http://localhost:3000';
+const APP_URL = 'https://leet-revise-8z4ft7iad-karthicks-projects-939838e3.vercel.app/';
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'STORE_AUTH') {

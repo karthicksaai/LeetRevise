@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadSettings();
 
   document.getElementById('connect-btn').addEventListener('click', () => {
-    const appUrl = 'http://localhost:3000';
+    const appUrl = 'https://leet-revise-8z4ft7iad-karthicks-projects-939838e3.vercel.app/';
     chrome.tabs.create({ url: `${appUrl}/auth/extension-login` });
   });
 

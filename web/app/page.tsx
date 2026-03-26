@@ -18,12 +18,12 @@ export default async function LandingPage() {
           Never forget a LeetCode problem again. Schedule spaced repetition reminders directly from your browser.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
+          <a
             href="/api/auth/login"
             className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-lg transition-colors"
           >
             Get Started with Google
-          </Link>
+          </a>
         </div>
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
           {[

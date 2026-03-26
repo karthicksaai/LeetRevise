@@ -92,38 +92,38 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ success: false, error: 'Failed to create revision events' }, { status: 500, headers: corsHeaders });
     }
 
-    let googleCalendarToken = null;
+    let calendarData = null;
     try {
       const { data: userData } = await supabase
         .from('users')
-        .select('google_calendar_token')
+        .select('google_calendar_token, google_calendar_refresh_token, calendar_connected')
         .eq('id', user.id)
         .single();
-      googleCalendarToken = userData?.google_calendar_token ?? null;
+      calendarData = userData;
     } catch {
-      // user row may not exist yet, skip calendar sync
+      // skip
     }
 
-    if (googleCalendarToken) {
+    if (calendarData?.calendar_connected && calendarData?.google_calendar_token) {
       try {
-        const calendarEventIds = await createRevisionEvents(googleCalendarToken, { title: problem_title, url: problem_url, difficulty });
+        const { createCalendarEvents } = await import('@/lib/google-calendar');
+        const eventIds = await createCalendarEvents(
+          calendarData.google_calendar_token,
+          calendarData.google_calendar_refresh_token,
+          { title: problem_title, url: problem_url, difficulty }
+        );
 
-        for (let i = 0; i < REVISION_INTERVALS.length; i++) {
-          const interval = REVISION_INTERVALS[i];
-          const eventId = calendarEventIds[i];
+        const intervals = [3, 7, 15, 30];
+        for (let i = 0; i < intervals.length; i++) {
           await supabase
             .from('revision_events')
-            .update({ google_calendar_event_id: eventId })
+            .update({ google_calendar_event_id: eventIds[i] })
             .eq('problem_id', problem.id)
-            .eq('interval_day', interval);
+            .eq('interval_day', intervals[i]);
         }
       } catch (calErr) {
-        if (calErr instanceof CalendarAuthError) {
-          await supabase
-            .from('users')
-            .update({ google_calendar_token: null })
-            .eq('id', user.id);
-        }
+        console.error('Calendar event creation failed:', calErr);
+        // Don't fail the whole request — calendar is optional
       }
     }
 

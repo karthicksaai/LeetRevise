@@ -16,9 +16,13 @@ function isChromeExtensionContextValid() {
 }
 
 async function getAuthData() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (!isChromeExtensionContextValid()) {
-      reject(new Error('Extension context invalidated. Please refresh the page.'));
+      resolve({
+        access_token: null,
+        refresh_token: null,
+        expires_at: null,
+      });
       return;
     }
 

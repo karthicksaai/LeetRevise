@@ -1,24 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-Requested-With',
+  'Access-Control-Max-Age': '86400',
+};
+
 export function middleware(request: NextRequest) {
-  // Handle OPTIONS preflight
   if (request.method === 'OPTIONS') {
-    return new NextResponse(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-Requested-With',
-        'Access-Control-Max-Age': '86400',
-      },
-    });
+    return NextResponse.json({}, { status: 200, headers: CORS_HEADERS });
   }
 
-  // For all other API requests, add CORS headers to response
   const response = NextResponse.next();
-  response.headers.set('Access-Control-Allow-Origin', '*');
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
-  response.headers.set('Access-Control-Allow-Headers', 'Authorization, Content-Type, X-Requested-With');
+  Object.entries(CORS_HEADERS).forEach(([key, value]) => {
+    response.headers.set(key, value);
+  });
   return response;
 }
 

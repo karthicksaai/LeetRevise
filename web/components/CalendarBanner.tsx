@@ -61,15 +61,34 @@ function CalendarBannerInner({ connected }: { connected: boolean }) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-5 pt-6">
-      <div className="flex items-center justify-between py-3 px-4 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
+    <div style={{ maxWidth: '48rem', margin: '0 auto', padding: '24px 20px 0' }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '12px 16px',
+        borderRadius: '8px',
+        border: '1px solid rgba(255,255,255,0.08)',
+      }}>
         <div>
-          <span className="text-white/60 text-sm">Connect Google Calendar</span>
-          <p className="text-white/20 text-xs mt-0.5">Auto-add revision reminders to your calendar</p>
+          <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '14px' }}>
+            Connect Google Calendar
+          </span>
+          <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '12px', marginTop: '2px' }}>
+            Auto-add revision reminders to your calendar
+          </p>
         </div>
         <a
           href="/api/auth/calendar"
-          className="text-xs bg-white/5 hover:bg-white/10 text-white/60 hover:text-white px-3 py-1.5 rounded-md transition-colors"
+          style={{
+            fontSize: '12px',
+            background: 'rgba(255,255,255,0.05)',
+            color: 'rgba(255,255,255,0.6)',
+            padding: '6px 12px',
+            borderRadius: '6px',
+            textDecoration: 'none',
+            border: '1px solid rgba(255,255,255,0.1)',
+          }}
         >
           Connect →
         </a>

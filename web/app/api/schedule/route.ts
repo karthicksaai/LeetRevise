@@ -12,6 +12,18 @@ const scheduleSchema = z.object({
 
 const REVISION_INTERVALS = [3, 7, 15, 30];
 
+export async function OPTIONS(): Promise<NextResponse> {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',

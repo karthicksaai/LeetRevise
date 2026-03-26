@@ -164,7 +164,10 @@ async function injectButton() {
   btn.addEventListener('mouseleave', () => { btn.style.transform = 'scale(1)'; });
 
   btn.addEventListener('click', async () => {
+    const data = await getAuthData();
+    console.log('Auth data:', data); // check this in console
     const authenticated = await isAuthenticated();
+    console.log('Authenticated:', authenticated);
     if (!authenticated) {
       showToast('Please connect your account in the extension popup', 'warning');
       return;

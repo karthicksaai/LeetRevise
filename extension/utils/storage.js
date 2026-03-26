@@ -58,7 +58,8 @@ async function clearAuthData() {
 
 async function isAuthenticated() {
   const data = await getAuthData();
-  return !!data[STORAGE_KEYS.ACCESS_TOKEN];
+  // support both direct key and STORAGE_KEYS constant
+  return !!(data['access_token'] || data[STORAGE_KEYS.ACCESS_TOKEN]);
 }
 
 async function getShowButton() {

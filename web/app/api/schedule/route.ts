@@ -12,22 +12,24 @@ const scheduleSchema = z.object({
 
 const REVISION_INTERVALS = [3, 7, 15, 30];
 
-function createCorsHeaders(origin?: string) {
-  const headers: Record<string, string> = {
-    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
-    'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-  };
-  if (origin) headers['Access-Control-Allow-Origin'] = origin;
-  return headers;
+export async function OPTIONS(): Promise<NextResponse> {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+      'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+      'Access-Control-Max-Age': '86400',
+    },
+  });
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const origin = request.headers.get('origin');
-  const corsHeaders = createCorsHeaders(origin);
-
-  if (request.method === 'OPTIONS') {
-    return new NextResponse(null, { status: 204, headers: corsHeaders });
-  }
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+  };
 
   try {
     const user = await getUserFromRequest(request);
@@ -130,11 +132,4 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const message = err instanceof Error ? err.message : 'Internal server error';
     return NextResponse.json({ success: false, error: message }, { status: 500, headers: corsHeaders });
   }
-}
-
-export async function OPTIONS(): Promise<NextResponse> {
-  return new NextResponse(null, {
-    status: 204,
-    headers: createCorsHeaders('*'),
-  });
 }

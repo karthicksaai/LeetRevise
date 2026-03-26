@@ -203,6 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('open-dashboard').addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.tabs.create({ url: 'http://localhost:3000/dashboard' });
+    chrome.tabs.create({ url: 'https://leet-revise-8z4ft7iad-karthicks-projects-939838e3.vercel.app/dashboard' });
   });
 });

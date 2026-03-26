@@ -61,6 +61,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
     return true;
   }
+
+  if (message.type === 'API_REQUEST') {
+    const { url, method, token, body } = message.payload;
+    fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) {
+          sendResponse({ success: true, data });
+        } else {
+          sendResponse({ success: false, error: data.error || 'Request failed' });
+        }
+      })
+      .catch((err) => sendResponse({ success: false, error: err.message }));
+    return true;
+  }
 });
 
 async function fetchAndStoreUserEmail(accessToken) {

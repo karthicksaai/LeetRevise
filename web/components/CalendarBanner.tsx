@@ -22,7 +22,7 @@ function CalendarBannerInner({ connected }: { connected: boolean }) {
       <div className="max-w-3xl mx-auto px-5 pt-6">
         <div className="flex items-center justify-between py-3 px-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
           <div className="flex items-center gap-2">
-            <span className="text-emerald-400 text-sm">📅 Google Calendar connected</span>
+            <span className="text-emerald-400 text-sm">Google Calendar connected</span>
             <span className="text-white/30 text-xs">Revision events will be added automatically</span>
           </div>
           <a href="/dashboard" className="text-white/30 text-xs hover:text-white/60">dismiss</a>

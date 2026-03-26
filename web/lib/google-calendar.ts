@@ -81,7 +81,7 @@ export async function createCalendarEvents(
     const dateStr = dueDate.toISOString().split('T')[0];
 
     const event: CalendarEvent = {
-      summary: `🔁 Revise: ${problem.title}`,
+      summary: `Revise: ${problem.title}`,
       description: `Day ${interval} revision of ${problem.title} (${problem.difficulty})\n\nProblem: ${problem.url}\n\nScheduled by LeetRevise`,
       start: { date: dateStr },
       end: { date: dateStr },

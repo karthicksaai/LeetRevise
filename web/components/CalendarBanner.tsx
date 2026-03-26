@@ -1,9 +1,9 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
-export default function CalendarBanner({ connected }: { connected: boolean }) {
+function CalendarBannerInner({ connected }: { connected: boolean }) {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<string | null>(null);
 
@@ -46,10 +46,13 @@ export default function CalendarBanner({ connected }: { connected: boolean }) {
       <div className="max-w-3xl mx-auto px-5 pt-6">
         <div className="flex items-center justify-between py-3 px-4 rounded-lg border border-white/5">
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
             <span className="text-white/40 text-xs">Google Calendar syncing</span>
           </div>
-          <button onClick={handleDisconnect} className="text-white/20 text-xs hover:text-red-400 transition-colors">
+          <button
+            onClick={handleDisconnect}
+            className="text-white/20 text-xs hover:text-red-400 transition-colors"
+          >
             disconnect
           </button>
         </div>
@@ -72,5 +75,14 @@ export default function CalendarBanner({ connected }: { connected: boolean }) {
         </a>
       </div>
     </div>
+  );
+}
+
+// Wrap in Suspense because useSearchParams() requires it in Next.js 13+
+export default function CalendarBanner({ connected }: { connected: boolean }) {
+  return (
+    <Suspense fallback={null}>
+      <CalendarBannerInner connected={connected} />
+    </Suspense>
   );
 }

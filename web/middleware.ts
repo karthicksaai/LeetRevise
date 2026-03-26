@@ -9,7 +9,7 @@ const CORS_HEADERS = {
 
 export function middleware(request: NextRequest) {
   if (request.method === 'OPTIONS') {
-    return NextResponse.json({}, { status: 200, headers: CORS_HEADERS });
+    return new NextResponse(null, { status: 204, headers: CORS_HEADERS });
   }
 
   const response = NextResponse.next();

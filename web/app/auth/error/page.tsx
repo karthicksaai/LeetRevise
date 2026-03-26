@@ -10,19 +10,28 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
 
-    // Handle hash-based token (implicit flow)
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        router.push('/dashboard');
-      }
-    });
+    // Parse hash fragment manually
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
 
-    // Also try getSession in case it's already set
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.push('/dashboard');
-      }
-    });
+    if (accessToken && refreshToken) {
+      supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken,
+      }).then(({ error }) => {
+        if (!error) {
+          router.push('/dashboard');
+        } else {
+          console.error('setSession error:', error);
+          router.push('/?error=auth_failed');
+        }
+      });
+    } else {
+      // No token in hash — real error
+      router.push('/?error=auth_failed');
+    }
   }, [router]);
 
   return (

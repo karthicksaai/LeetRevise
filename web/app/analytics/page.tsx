@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import AnalyticsClient from './AnalyticsClient';
 
 export default async function AnalyticsPage() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {

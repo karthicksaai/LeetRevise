@@ -3,19 +3,30 @@ import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export function createSupabaseServerClient() {
-  const cookieStore = cookies();
+export async function createSupabaseServerClient() {
+  const cookieStore = await cookies();
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) { return cookieStore.get(name)?.value; },
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
         set(name: string, value: string, options: Record<string, unknown>) {
-          cookieStore.set({ name, value, ...options });
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch {
+            // Silently ignore — cannot set cookies in Server Components
+            // Token refresh will be handled by middleware
+          }
         },
         remove(name: string, options: Record<string, unknown>) {
-          cookieStore.set({ name, value: '', ...options });
+          try {
+            cookieStore.set({ name, value: '', ...options });
+          } catch {
+            // Silently ignore
+          }
         },
       },
     }
@@ -36,14 +47,20 @@ export async function createSupabaseRouteClient(request: NextRequest, response: 
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) { return request.cookies.get(name)?.value; },
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
         set(name: string, value: string, options: Record<string, unknown>) {
-          request.cookies.set({ name, value, ...options });
-          response.cookies.set({ name, value, ...options });
+          try {
+            request.cookies.set({ name, value, ...options });
+            response.cookies.set({ name, value, ...options });
+          } catch {}
         },
         remove(name: string, options: Record<string, unknown>) {
-          request.cookies.set({ name, value: '', ...options });
-          response.cookies.set({ name, value: '', ...options });
+          try {
+            request.cookies.set({ name, value: '', ...options });
+            response.cookies.set({ name, value: '', ...options });
+          } catch {}
         },
       },
     }

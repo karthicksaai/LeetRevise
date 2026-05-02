@@ -11,9 +11,13 @@ export interface CalendarTokens {
 export interface CalendarEvent {
   summary: string;
   description: string;
-  start: { date: string };
-  end: { date: string };
+  start: { dateTime?: string; date?: string; timeZone?: string };
+  end: { dateTime?: string; date?: string; timeZone?: string };
   colorId?: string;
+  reminders?: {
+    useDefault: boolean;
+    overrides?: { method: string; minutes: number }[];
+  };
 }
 
 export class CalendarAuthError extends Error {
@@ -76,16 +80,34 @@ export async function createCalendarEvents(
   const eventIds: string[] = [];
 
   for (const interval of intervals) {
-    const dueDate = new Date();
-    dueDate.setDate(dueDate.getDate() + interval);
-    const dateStr = dueDate.toISOString().split('T')[0];
+    const revisionDate = new Date();
+    revisionDate.setDate(revisionDate.getDate() + interval);
+
+    const startDate = new Date(revisionDate);
+    startDate.setHours(9, 0, 0, 0);
+
+    const endDate = new Date(revisionDate);
+    endDate.setHours(9, 30, 0, 0);
 
     const event: CalendarEvent = {
       summary: `Revise: ${problem.title}`,
       description: `Day ${interval} revision of ${problem.title} (${problem.difficulty})\n\nProblem: ${problem.url}\n\nScheduled by LeetRevise`,
-      start: { date: dateStr },
-      end: { date: dateStr },
+      start: {
+        dateTime: startDate.toISOString(),
+        timeZone: 'Asia/Kolkata',
+      },
+      end: {
+        dateTime: endDate.toISOString(),
+        timeZone: 'Asia/Kolkata',
+      },
       colorId: colorMap[problem.difficulty] || '5',
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'popup', minutes: 0 },
+          { method: 'email', minutes: -60 },
+        ],
+      },
     };
 
     let res = await fetch(`${GOOGLE_CALENDAR_URL}/calendars/primary/events`, {

@@ -41,6 +41,8 @@ export default async function LandingPage() {
       <footer className="text-center py-6 text-white/30 text-xs mt-16">
         <a href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</a>
         <span className="mx-2">·</span>
+        <a href="/terms" className="hover:text-white/60 transition-colors">Terms of Service</a>
+        <span className="mx-2">·</span>
         <span>© 2026 LeetRevise</span>
       </footer>
     </main>

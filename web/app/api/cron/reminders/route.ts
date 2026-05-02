@@ -29,7 +29,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const supabase = createSupabaseServiceClient();
     //const today = new Date().toISOString().split('T')[0];
     const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
-    
+
     const { data: dueEvents, error } = await supabase
       .from('revision_events')
       .select(`
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           problem_url,
           difficulty
         ),
-        users (
+        users!inner(
           email
         )
       `)

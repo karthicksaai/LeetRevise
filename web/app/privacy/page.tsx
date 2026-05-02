@@ -16,7 +16,7 @@ export default function PrivacyPage() {
 
       <section className="mb-8">
         <h2 className="text-white text-lg font-medium mb-3">Google Calendar access</h2>
-        <p className="text-sm leading-relaxed">We request the <code className="text-orange-400 bg-white/5 px-1 rounded">calendar.events</code> scope only to create revision reminder events titled "Revise: [problem name]". We do not read, modify, or delete any of your existing calendar events.</p>
+        <p className="text-sm leading-relaxed">We request the <code className="text-orange-400 bg-white/5 px-1 rounded">calendar.events</code> scope only to create revision reminder events titled "Revise: [problem name]".We only access your Google Calendar to schedule revision events; we do not store, share, or sell your personal calendar data.</p>
       </section>
 
       <section className="mb-8">

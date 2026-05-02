@@ -167,6 +167,11 @@ export default function DashboardClient() {
           </div>
         )}
       </section>
+      <footer className="text-center py-6 text-white/30 text-xs mt-16">
+        <a href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</a>
+        <span className="mx-2">·</span>
+        <span>© 2026 LeetRevise</span>
+      </footer>
     </main>
   );
 }

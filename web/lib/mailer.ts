@@ -73,7 +73,7 @@ export async function sendReminderDigest(
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://leetrevise.vercel.app';
 
   const { error } = await resend.emails.send({
-    from: 'LeetRevise <reminders@leetrevise.app>',
+    from: 'LeetRevise <onboarding@resend.dev>',
     to: userEmail,
     subject: `LeetRevise: You have ${problems.length} problem${problems.length !== 1 ? 's' : ''} to revisit today`,
     html: buildEmailHtml(problems, appUrl),

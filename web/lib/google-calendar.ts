@@ -74,7 +74,7 @@ export async function createCalendarEvents(
   const colorMap: Record<string, string> = {
     Easy: '2',    // green
     Medium: '5',  // yellow
-    Hard: '11',   // red
+    Hard: '11',   // redd
   };
 
   const eventIds: string[] = [];

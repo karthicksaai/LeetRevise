@@ -29,6 +29,11 @@ export default function PrivacyPage() {
         <p className="text-sm leading-relaxed">We use Supabase for database and authentication, Google OAuth for sign-in, and Resend for email delivery. Each service has its own privacy policy.</p>
       </section>
 
+      <section className="mb-8">
+        <h2 className="text-white text-lg font-medium mb-3">Data Sharing and Disclosure</h2>
+        <p className="text-sm leading-relaxed">We do not sell or trade your personal information. We share data with third-party service providers (Supabase for database hosting, Resend for email notifications) only to the extent necessary to provide the LeetRevise service. We may disclose your information if required by law or to protect our rights. We do not share your Google user data with any other third parties for their own marketing purposes.</p>
+      </section>
+
       <section>
         <h2 className="text-white text-lg font-medium mb-3">Contact</h2>
         <p className="text-sm">karthicksaai197@gmail.com</p>

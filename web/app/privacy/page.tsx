@@ -30,6 +30,24 @@ export default function PrivacyPage() {
       </section>
 
       <section className="mb-8">
+        <h2 className="text-white text-lg font-medium mb-3">Data Protection & Retention</h2>
+        <ul className="list-disc list-inside text-sm leading-relaxed space-y-2 text-gray-300">
+          <li>
+            <strong className="text-white">Encryption in Transit:</strong> All data transferred between the extension and our servers is protected using industry-standard TLS/SSL encryption.
+          </li>
+          <li>
+            <strong className="text-white">Encryption at Rest:</strong> Sensitive information, such as OAuth tokens, is stored in our Supabase database using AES-256 encryption.
+          </li>
+          <li>
+            <strong className="text-white">Secure Authentication:</strong> We use Google OAuth 2.0 for all sign-ins, meaning we never see or store your Google account password.
+          </li>
+          <li>
+            <strong className="text-white">Account Deletion:</strong> You can disconnect Google Calendar via your dashboard. To permanently delete your account and all data, email <span className="text-orange-400">karthicksaai197@gmail.com</span>; requests are processed within 7 days.
+          </li>
+        </ul>
+      </section>
+
+      <section className="mb-8">
         <h2 className="text-white text-lg font-medium mb-3">Data Sharing and Disclosure</h2>
         <p className="text-sm leading-relaxed">We do not sell or trade your personal information. We share data with third-party service providers (Supabase for database hosting, Resend for email notifications) only to the extent necessary to provide the LeetRevise service. We may disclose your information if required by law or to protect our rights. We do not share your Google user data with any other third parties for their own marketing purposes.</p>
       </section>

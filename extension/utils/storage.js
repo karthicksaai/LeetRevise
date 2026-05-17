@@ -58,7 +58,7 @@ async function clearAuthData() {
 
 async function isAuthenticated() {
   const data = await getAuthData();
-  // support both direct key and STORAGE_KEYS constant
+  // support both direct key and STORAGE_KEYS constantt
   return !!(data['access_token'] || data[STORAGE_KEYS.ACCESS_TOKEN]);
 }
 

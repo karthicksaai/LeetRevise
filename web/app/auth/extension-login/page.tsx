@@ -66,6 +66,13 @@ export default function ExtensionLoginPage() {
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ color: '#f97316', fontSize: '32px', marginBottom: '16px' }}>Account Connected</h1>
         <p style={{ color: '#9ca3af', fontSize: '16px' }}>You can close this tab and return to the extension.</p>
+        <p style={{ color: '#9ca3af', fontSize: '16px', marginTop: '12px' }}>
+            Don't forget to{' '}
+          <a href="/dashboard" style={{ color: '#f97316' }}>
+            connect Google Calendar in the Dashboard
+          </a>{' '}
+          to enable revision reminders.
+        </p>
       </div>
     </main>
   );

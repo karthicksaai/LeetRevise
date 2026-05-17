@@ -126,7 +126,7 @@ async function loadStats() {
       },
     });
   } catch {
-    // Stats load failed silently
+    // Stats load failed silentlyy
   }
 }
 

@@ -83,7 +83,7 @@ export default async function LandingPage() {
             <div className="absolute -inset-6 rounded-[32px] bg-white/[0.03] blur-3xl" />
             <div className="relative rounded-[28px] border border-white/10 bg-[#141414] p-3 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
               <img
-                src="/landing/extension-preview.png"
+                src="/extension-preview.png"
                 alt="LeetRevise extension button on a LeetCode problem page"
                 className="w-full rounded-[22px] border border-white/8"
               />

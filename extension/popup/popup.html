@@ -10,7 +10,8 @@
   <div class="popup-container">
     <header class="popup-header">
       <span class="logo">LeetRevise</span>
-      <a id="open-dashboard" href="#" style="display:block;text-align:center;font-size:11px;color:#f97316;padding:6px 0 2px;text-decoration:none;">Open Dashboard →</a>
+      <a id="open-dashboard" href="#" class="dashboard-link">Open Dashboard →</a>
+
       <div class="tabs">
         <button class="tab active" data-tab="pending">Pending</button>
         <button class="tab" data-tab="stats">Stats</button>
@@ -24,10 +25,12 @@
         <div class="skeleton"></div>
         <div class="skeleton"></div>
       </div>
+
       <div id="pending-empty" class="empty-state" style="display:none;">
         <p class="empty-title">No pending revisions.</p>
         <p class="empty-sub">Go fail some problems!</p>
       </div>
+
       <ul id="pending-list" style="display:none;"></ul>
     </div>
 
@@ -50,6 +53,7 @@
           <span class="stat-value" id="stat-streak">-</span>
         </div>
       </div>
+
       <div class="chart-container">
         <canvas id="diff-chart" height="160"></canvas>
       </div>
@@ -58,11 +62,17 @@
     <div class="tab-content" id="tab-settings" style="display:none;">
       <div id="settings-logged-out" style="display:none;">
         <p class="settings-info">Connect your account to sync problems and receive reminders.</p>
-        <button class="btn-primary" id="connect-btn">Connect Account</button>
+        <button class="btn-primary" id="connect-btn">Continue with Google</button>
       </div>
+
       <div id="settings-logged-in" style="display:none;">
         <p class="settings-email" id="settings-email-text"></p>
-        <p style="font-size:12px; color:#9ca3af; margin: 6px 0 12px;"> Please connect to Google Calendar from the <a href="https://www.leetrevise.app/dashboard" target="_blank" style="color:#f97316;">Dashboard</a></p>
+
+        <p class="settings-note">
+          Please connect to Google Calendar from the
+          <a href="https://www.leetrevise.app/dashboard" target="_blank" rel="noopener noreferrer">Dashboard</a>
+        </p>
+
         <div class="toggle-row">
           <span class="toggle-label">Show button on LeetCode</span>
           <label class="toggle">
@@ -70,12 +80,12 @@
             <span class="toggle-slider"></span>
           </label>
         </div>
+
         <button class="btn-danger" id="disconnect-btn">Disconnect</button>
       </div>
     </div>
   </div>
 
-  <!-- scripts at bottom of body, in dependency order -->
   <script src="../vendor/chart.umd.min.js"></script>
   <script src="../utils/storage.js"></script>
   <script src="../utils/api.js"></script>

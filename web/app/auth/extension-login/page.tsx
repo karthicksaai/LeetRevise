@@ -10,39 +10,52 @@ export default function ExtensionLoginPage() {
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
 
-    const handleAuth = async () => {
-      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    // Listen for auth state — fires once PKCE code exchange completes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        const { access_token, refresh_token, expires_at } = session;
 
-      if (sessionError || !sessionData.session) {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: `${window.location.origin}/auth/extension-login`,
-            scopes: 'openid email profile https://www.googleapis.com/auth/calendar.events',
+        window.postMessage(
+          {
+            type: 'LEETREVISE_AUTH_SUCCESS',
+            payload: { access_token, refresh_token, expires_at },
           },
-        });
+          '*'
+        );
 
-        if (error) {
-          setStatus('error');
-          setErrorMessage(error.message);
-        }
+        setStatus('success');
+      }
+    });
+
+    const handleAuth = async () => {
+      // Check if we already have a session (returning to this page post-redirect)
+      const { data: sessionData } = await supabase.auth.getSession();
+
+      if (sessionData.session) {
+        const { access_token, refresh_token, expires_at } = sessionData.session;
+
+        window.postMessage(
+          {
+            type: 'LEETREVISE_AUTH_SUCCESS',
+            payload: { access_token, refresh_token, expires_at },
+          },
+          '*'
+        );
+
+        setStatus('success');
         return;
       }
 
-      const { access_token, refresh_token, expires_at } = sessionData.session;
-
-      window.postMessage(
-        {
-          type: 'LEETREVISE_AUTH_SUCCESS',
-          payload: { access_token, refresh_token, expires_at },
-        },
-        '*'
-      );
-
-      setStatus('success');
+      // No session yet — kick off OAuth via the server login route (PKCE)
+      // This redirects to /api/auth/login which sets PKCE cookies correctly
+      window.location.href = '/api/auth/login?next=/auth/extension-login';
     };
 
     handleAuth();
+
+    return () => subscription.unsubscribe();
   }, []);
 
   if (status === 'loading') {
@@ -67,7 +80,7 @@ export default function ExtensionLoginPage() {
         <h1 style={{ color: '#f97316', fontSize: '32px', marginBottom: '16px' }}>Account Connected</h1>
         <p style={{ color: '#9ca3af', fontSize: '16px' }}>You can close this tab and return to the extension.</p>
         <p style={{ color: '#9ca3af', fontSize: '16px', marginTop: '12px' }}>
-            Don't forget to{' '}
+          Don&apos;t forget to{' '}
           <a href="/dashboard" style={{ color: '#f97316' }}>
             connect Google Calendar in the Dashboard
           </a>{' '}

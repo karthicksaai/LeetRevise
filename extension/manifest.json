@@ -8,7 +8,7 @@
 
   "host_permissions": [
     "https://leetcode.com/*",
-    "https://leetrevise.app/*",   
+    "https://www.leetrevise.app/*",   
     "https://*.supabase.co/*"
   ],
 
@@ -24,7 +24,7 @@
       "css": ["content.css"]
     },
     {
-      "matches": ["https://leetrevise.app/auth/extension-login*"],
+      "matches": ["https://www.leetrevise.app/auth/extension-login*"],
       "js": ["utils/storage.js", "auth-receiver.js"]
     }
   ],

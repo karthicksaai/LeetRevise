@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   loadSettings();
 
   document.getElementById('connect-btn').addEventListener('click', () => {
-    const appUrl = 'https://leetrevise.app';
+    const appUrl = 'https://www.leetrevise.app';
     chrome.tabs.create({ url: `${appUrl}/auth/extension-login` });
   });
 
@@ -203,6 +203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('open-dashboard').addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.tabs.create({ url: 'https://leetrevise.app/dashboard' });
+    chrome.tabs.create({ url: 'https://www.leetrevise.app/dashboard' });
   });
 });

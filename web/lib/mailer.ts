@@ -70,7 +70,7 @@ export async function sendReminderDigest(
   userEmail: string,
   problems: ProblemReminder[]
 ): Promise<void> {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://leetrevise.app';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.leetrevise.app';
 
   const { error } = await resend.emails.send({
     from: 'LeetRevise <onboarding@resend.dev>',

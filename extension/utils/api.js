@@ -1,4 +1,4 @@
-const APP_URL = 'https://leetrevise.app';
+const APP_URL = 'https://www.leetrevise.app';
 
 async function getValidAccessToken() {
   const data = await getAuthData();

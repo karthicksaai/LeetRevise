@@ -1,14 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "LeetRevise",
-  "version": "1.0.0.2",
-  "description": "Schedule spaced repetition reminders for LeetCode problems you could not solve.",
+  "name": "LeetReviseNew",
+  "version": "1.0.0.3",
+  "description": "Schedule spaced repetition reminders (Google Calendar) for LeetCode problems you could not solve.",
 
   "permissions": ["storage"],
 
   "host_permissions": [
     "https://leetcode.com/*",
-    "https://leet-revise.vercel.app/*",   
+    "https://leetrevise.app/*",   
     "https://*.supabase.co/*"
   ],
 
@@ -24,7 +24,7 @@
       "css": ["content.css"]
     },
     {
-      "matches": ["https://leet-revise.vercel.app/auth/extension-login*"],
+      "matches": ["https://leetrevise.app/auth/extension-login*"],
       "js": ["utils/storage.js", "auth-receiver.js"]
     }
   ],

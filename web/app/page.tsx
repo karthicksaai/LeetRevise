@@ -29,7 +29,7 @@ export default async function LandingPage() {
           {[
             { title: 'One-Click Scheduling', desc: 'Stuck on a problem? Click the injected button to schedule Day 3, 7, 15, and 30 revisions instantly.' },
             { title: 'Google Calendar Sync', desc: 'Revision events are added to your Google Calendar automatically with popup reminders.' },
-            { title: 'Daily Email Digest', desc: 'Receive a daily email at 8 AM listing all problems due for revision so nothing slips through.' },
+            { title: 'Daily Email Digest', desc: 'Receive a daily email at 9 AM UTC listing all problems due for revision so nothing slips through.' },
           ].map((feature) => (
             <div key={feature.title} className="bg-[#1e1e2e] rounded-lg p-5">
               <h3 className="text-orange-400 font-semibold mb-2">{feature.title}</h3>

@@ -1,4 +1,4 @@
-const APP_URL = 'https://leet-revise.vercel.app';
+const APP_URL = 'https://leetrevise.app';
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'STORE_AUTH') {

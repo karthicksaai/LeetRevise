@@ -4,9 +4,10 @@ import { createSupabaseRouteClient } from '@/lib/supabase-server';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/dashboard';
+  const requestUrl = new URL(request.url);
+  const code = requestUrl.searchParams.get('code');
+  const next = requestUrl.searchParams.get('next') || '/dashboard';
+  const origin = requestUrl.origin;
 
   if (!code) {
     return NextResponse.redirect(`${origin}/auth/error`);
@@ -15,9 +16,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const response = NextResponse.redirect(`${origin}${next}`);
   const supabase = await createSupabaseRouteClient(request, response);
 
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
 
-  if (error) {
+  if (exchangeError) {
+    console.error('exchangeCodeForSession error:', exchangeError);
+    return NextResponse.redirect(`${origin}/auth/error`);
+  }
+
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabase.auth.getSession();
+
+  if (sessionError || !session) {
+    console.error('No session after code exchange:', sessionError);
     return NextResponse.redirect(`${origin}/auth/error`);
   }
 

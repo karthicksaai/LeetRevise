@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+  const next = request.nextUrl.searchParams.get('next') ?? '/dashboard';
 
   if (!appUrl) {
     console.error('NEXT_PUBLIC_APP_URL is not set');
@@ -12,14 +13,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    // Use a temporary response to collect PKCE cookies set by supabase-ssr
     const tempResponse = NextResponse.next();
     const supabase = await createSupabaseRouteClient(request, tempResponse);
+
+    const callbackUrl = new URL('/api/auth/callback', appUrl);
+    callbackUrl.searchParams.set('next', next);
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${appUrl}/api/auth/callback`,
+        redirectTo: callbackUrl.toString(),
         scopes: 'openid email profile',
         queryParams: {
           access_type: 'offline',
@@ -33,7 +36,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.redirect(new URL('/?error=oauth_failed', request.url));
     }
 
-    // Redirect to Google, forwarding any PKCE cookies set by supabase-ssr
     const redirectResponse = NextResponse.redirect(data.url);
     tempResponse.cookies.getAll().forEach((cookie) => {
       redirectResponse.cookies.set(cookie);

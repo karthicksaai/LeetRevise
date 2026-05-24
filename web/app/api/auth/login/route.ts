@@ -1,18 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createSupabaseServiceClient } from '@/lib/supabase-server';
+import { createSupabaseRouteClient } from '@/lib/supabase-server';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-  
+
   if (!appUrl) {
     console.error('NEXT_PUBLIC_APP_URL is not set');
     return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
   }
 
   try {
-    const supabase = createSupabaseServiceClient();
+    // Use a temporary response to collect PKCE cookies set by supabase-ssr
+    const tempResponse = NextResponse.next();
+    const supabase = await createSupabaseRouteClient(request, tempResponse);
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -31,7 +33,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       return NextResponse.redirect(new URL('/?error=oauth_failed', request.url));
     }
 
-    return NextResponse.redirect(data.url);
+    // Redirect to Google, forwarding any PKCE cookies set by supabase-ssr
+    const redirectResponse = NextResponse.redirect(data.url);
+    tempResponse.cookies.getAll().forEach((cookie) => {
+      redirectResponse.cookies.set(cookie);
+    });
+
+    return redirectResponse;
   } catch (err) {
     console.error('Login route error:', err);
     return NextResponse.json({ error: String(err) }, { status: 500 });

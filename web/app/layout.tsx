@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'LeetRevise',
   description: 'Spaced repetition for LeetCode problems',
   icons: {
-    icon: "/favicon.ico", 
+    icon: "/favicon.png", 
   },
 };
 

@@ -118,6 +118,8 @@ export default async function LandingPage() {
           <span className="mx-2">·</span>
           <a href="/terms" className="transition-colors hover:text-white/55">Terms of Service</a>
           <span className="mx-2">·</span>
+          <a href="/faq" className="transition-colors hover:text-white/55">FAQ</a>
+          <span className="mx-2">·</span>
           <span>© 2026 LeetRevise</span>
         </footer>
 

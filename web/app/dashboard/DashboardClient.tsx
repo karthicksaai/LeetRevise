@@ -167,10 +167,12 @@ export default function DashboardClient() {
           </div>
         )}
       </section>
-      <footer className="text-center py-6 text-white/30 text-xs mt-16">
-        <a href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</a>
+      <footer className="pb-8 pt-4 text-center text-xs text-white/30">
+        <a href="/privacy" className="transition-colors hover:text-white/55">Privacy Policy</a>
         <span className="mx-2">·</span>
-        <a href="/terms" className="hover:text-white/60 transition-colors">Terms of Service</a>
+        <a href="/terms" className="transition-colors hover:text-white/55">Terms of Service</a>
+        <span className="mx-2">·</span>
+        <a href="/faq" className="transition-colors hover:text-white/55">FAQ</a>
         <span className="mx-2">·</span>
         <span>© 2026 LeetRevise</span>
       </footer>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "LeetReviseNew",
-  "version": "1.0.0.3",
+  "version": "1.0.0.4",
   "description": "Schedule spaced repetition reminders (Google Calendar) for LeetCode problems you could not solve.",
 
   "permissions": ["storage"],
